@@ -1,0 +1,66 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: release-task
+spec:
+  steps:
+  - name: show-current-user
+    image: bluewish/clear-builder
+    command: ["/bin/bash"]
+    args: ["-c", "echo $(id -u -n)"]
+
+  - name: download-clr-distro-factory
+    image: bluewish/clear-builder
+    command: ["/bin/bash"]
+    args: ["-c", "if [ ! -d /release-workspace/clr-distro-factory ]; then sudo mkdir /release-workspace/clr-distro-factory && \
+      sudo chown builder:builder /release-workspace/clr-distro-factory -R && \
+      cd /release-workspace/clr-distro-factory && \
+      wget https://github.com/clearlinux/clr-distro-factory/archive/clr-distro-factory-0.3.3.tar.gz && \
+      tar zxvf clr-distro-factory-0.3.3.tar.gz -C /release-workspace/clr-distro-factory --strip-components=1 && \
+      ls /release-workspace/clr-distro-factory -all; fi"]
+    volumeMounts:
+    - name: release-workspace
+      mountPath: /release-workspace
+
+  - name: git-config
+    image: bluewish/clear-builder
+    command: ["/bin/bash"]
+    args: ["-c", "sudo cp /home/builder/.gitconfig ~/.gitconfig && sudo chown builder:builder ~/.gitconfig"]
+
+  - name: release
+    image: bluewish/clear-builder
+    command: ["/bin/bash"]
+    args: ["-c", "cd /release-workspace/clr-distro-factory && make release"]
+    volumeMounts:
+    - name: release-workspace
+      mountPath: /release-workspace    
+
+  - name: debug-output-1
+    image: bluewish/clear-builder
+    command: ["/bin/bash"]
+    args: ["-c", "echo Success!"]
+
+  volumes:
+  - name: release-workspace
+    persistentVolumeClaim:
+      claimName: distro-workspace-claim
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: release-pipeline
+spec:
+  tasks:
+  - name: run-release-task
+    taskRef: 
+      name: release-task
+
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  name: run-release-pipeline
+spec:
+  pipelineRef:
+    name: release-pipeline
+
