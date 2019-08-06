@@ -4,6 +4,8 @@
 
 This project is to embed above scripts/tools into a [tekton task](https://github.com/tektoncd/pipeline/blob/master/docs/tasks.md) and execute as a [tekton pipeline](https://github.com/tektoncd/pipeline/blob/master/docs/pipelineruns.md) which can be deployed on any kubernete based cloud native stack.
 
+![Design](doc/design.png)
+
 ## Deployment Steps
 
 This project could be deployed on any kubernete platform including local minikube or CSP platforms. Below will use minikube as example
