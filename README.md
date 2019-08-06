@@ -45,3 +45,18 @@ You can get logs by
 tkn pr logs run-release-pipeline -a
 ```
 or use ``` kubectl logs ```
+
+### Publish distro via web interface on kubernetes cluster
+After releaase pipeline succesful executed, you can publish distro on kubernete clusters by:
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kenplusplus/clr-distro-factory-tekton/master/services/distro-web.yaml
+```
+Then access web on minikube platform by:
+```
+minikube service distro-web
+```
+Or check service information by:
+```
+kubectl describe service distro-web
+```
