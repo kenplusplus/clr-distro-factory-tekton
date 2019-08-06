@@ -1,4 +1,4 @@
-# Host Clear Linux* Downstream on Cloud Native Stack
+# Host Clear Linux* Downstream on Kubernete & Tekton Pipeline
 
 [clr-distro-factory-tool](https://github.com/clearlinux/clr-distro-factory) is the tool for maintaining downstream, which include several scripts for koji, release, watch pipeline (Note: the pipeline here is not equal the pipeline definition in tekton).
 
