@@ -23,11 +23,8 @@ This project could be deployed on any kubernete platform including local minikub
     ```
     **Note: 16G memory is required for full knative and tekton pipeline.**
 
-3. [Install knative](https://knative.dev/v0.5-docs/install/knative-with-minikube/)
-    **Note: 0.6 and 0.7 is not workable till now.**
-
-4. [Install Tekton Pipeline](https://github.com/tektoncd/pipeline/blob/master/docs/install.md)
-5. (optional) [Install Tekton CLI tool](https://github.com/tektoncd/cli)
+3. [Install Tekton Pipeline](https://github.com/tektoncd/pipeline/blob/master/docs/install.md)
+4. (optional) [Install Tekton CLI tool](https://github.com/tektoncd/cli)
 
 ### Setup persistent volume for distro workspace
 ```
