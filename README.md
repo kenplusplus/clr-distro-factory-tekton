@@ -1,14 +1,14 @@
 # Host Clear Linux* Downstream on Kubernete & Tekton Pipeline
 
-[clr-distro-factory-tool](https://github.com/clearlinux/clr-distro-factory) is the tool for maintaining downstream, which include several scripts for koji, release, watch pipeline (Note: the pipeline here is not equal the pipeline definition in tekton).
+[clr-distro-factory-tool](https://github.com/clearlinux/clr-distro-factory) is the tool for maintaining Clear Linux downstream repository, which include several scripts like koji, release, watch pipeline (**Note: the pipeline here is not equal the pipeline definition in tekton**).
 
-This project is to embed above scripts/tools into a [tekton task](https://github.com/tektoncd/pipeline/blob/master/docs/tasks.md) and execute as a [tekton pipeline](https://github.com/tektoncd/pipeline/blob/master/docs/pipelineruns.md) which can be deployed on any kubernete based cloud native stack.
+This project is to embed above scripts/tools into single [tekton task](https://github.com/tektoncd/pipeline/blob/master/docs/tasks.md) and execute as a [tekton pipeline](https://github.com/tektoncd/pipeline/blob/master/docs/pipelineruns.md) which can be deployed on any kubernete based cloud native platform.
 
 ![Design](doc/design.png)
 
 ## Deployment Steps
 
-This project could be deployed on any kubernete platform including local minikube or CSP platforms. Below will use minikube as example
+This project could be deployed on any kubernete platform including local minikube or CSP platforms. Below is the example for minikube:
 
 ### Setup Minikube cluster
 1. [Install minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
@@ -21,8 +21,6 @@ This project could be deployed on any kubernete platform including local minikub
     --disk-size=40g \
     --extra-config=apiserver.enable-admission-plugins="LimitRanger,NamespaceExists,NamespaceLifecycle,ResourceQuota,ServiceAccount,DefaultStorageClass,MutatingAdmissionWebhook"
     ```
-    **Note: 16G memory is required for full knative and tekton pipeline.**
-
 3. [Install Tekton Pipeline](https://github.com/tektoncd/pipeline/blob/master/docs/install.md)
 4. (optional) [Install Tekton CLI tool](https://github.com/tektoncd/cli)
 
@@ -30,7 +28,7 @@ This project could be deployed on any kubernete platform including local minikub
 ```
 kubectl create -f https://raw.githubusercontent.com/kenplusplus/clr-distro-factory-tekton/master/storage/distro-workspace-pvc-minikube.yaml
 ```
-if want delete persisten volume later:
+if want delete created persisten volume later:
 ```
 kubectl delete -f https://raw.githubusercontent.com/kenplusplus/clr-distro-factory-tekton/master/storage/distro-workspace-pvc-minikube.yaml
 ```
