@@ -4,15 +4,15 @@ metadata:
   name: nginx-conf
 data:
   nginx.conf: |
-    user nginx;
+    user nobody;
     events {
       worker_connections 768;
     }
-    worker_processes  3;
-    error_log  /var/log/nginx/error.log;
+
     http {
+      access_log stdout; 
+      error_log stderr; 
       server {
-          listen       80;
           root /var/www/html;
           location / {
               autoindex on;
@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx
+        image: clearlinux/nginx
         volumeMounts:
         - mountPath: /var/www/html
           name: site-data
